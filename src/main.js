@@ -60,10 +60,10 @@ module.exports.loop = function () {
 
     let counts = spawnCreeps();
     logger.info('** Status Report **');
-    logger.info('Harvesters: ' + counts.harvesters);
-    logger.info('Upgraders: ' + counts.upgraders);
-    logger.info('Builders: ' + counts.builders);
-    logger.info('*******************');
+    logger.info(`Harvesters: ${counts.harvesters}/${constants.room.harvesters}`);
+    logger.info(`Upgraders: ${counts.upgraders}/${constants.room.upgraders}`);
+    logger.info(`Builders:  ${counts.builders}/${constants.room.builders}`);
+    logger.info(`*******************`);
 };
 
 
