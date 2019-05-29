@@ -1,5 +1,6 @@
 # IntelliJ
 .idea
+config.json
 
 # Logs
 logs
