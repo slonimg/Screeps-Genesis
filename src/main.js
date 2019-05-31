@@ -26,18 +26,22 @@ const spawnCreeps = () => {
     let harvesters = _.filter(Game.creeps, (creep) => creep.memory.role === roles.HARVESTER);
     let upgraders = _.filter(Game.creeps, (creep) => creep.memory.role === roles.UPGRADER);
     let builders = _.filter(Game.creeps, (creep) => creep.memory.role === roles.BUILDER);
+    let spawn = Game.spawns['Spawn1'];
 
-    if (harvesters.length < constants.room.harvesters) {
+    if (!spawn.room.memory.sources) {
+        spawn.room.memory.sources = spawn.room.find(FIND_SOURCES).length;
+    }
+
+    if (harvesters.length < spawn.room.memory.sources*3) {
         logger.info('Spawning harvester');
-        harvester.createHarvester(Game.spawns['Spawn1'])
+        logger.debug(harvester.createHarvester(spawn));
     }
     else if (upgraders.length < constants.room.upgraders) {
         logger.info('Spawning upgrader');
-        upgrader.createUpgrader(Game.spawns['Spawn1'])
+        logger.debug(upgrader.createUpgrader(spawn));
     } else if (builders.length < constants.room.builders) {
         logger.info('Spawning builder');
-        logger.debug(builder.createBuilder(Game.spawns['Spawn1']))
-
+        logger.debug(builder.createBuilder(spawn))
     } else {
         logger.info('no creeps spawned');
     }
