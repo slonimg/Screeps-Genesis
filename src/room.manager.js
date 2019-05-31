@@ -33,10 +33,8 @@ let planSpawnner = (room) => {
     if (spawnFlags && spawnFlags.length > 0) {
         let spawn = spawnFlags[0];
         visualizeSpawn(room, spawn.pos);
-
-        logger.info(`flag color is ${spawn.color} and ${COLORS_ALL[COLOR_PURPLE]-1}`);
     } else {
-        logger.info(`flag not found`);
+        logger.debug(`flag not found`);
     }
 };
 
