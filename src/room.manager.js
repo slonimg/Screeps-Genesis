@@ -20,7 +20,6 @@ const logger = require('logger');
 // };
 
 let visualizeSpawn = (room, pos) => {
-    logger.info(`visualizin ${room}, ${pos}`);
     room.visual.circle(pos, {fill: 'transparent', radius: 0.55, stroke: 'white'});
     room.visual.circle(pos, {fill: 'yellow', radius: 0.35, stroke: 'black'});
 };
@@ -57,6 +56,36 @@ let planSpawnner = (room) => {
 //
 // };
 
+let operateTowers = (room) => {
+    let towers = room.find(FIND_STRUCTURES, {
+        filter: (structure) => { return structure.structureType === STRUCTURE_TOWER }
+    });
+    let targets = room.find(FIND_STRUCTURES, {
+        filter: (structure) => {
+            return (structure.structureType === STRUCTURE_EXTENSION ||
+                structure.structureType === STRUCTURE_SPAWN ||
+                structure.structureType === STRUCTURE_TOWER ||
+                structure.structureType === STRUCTURE_ROAD) && structure.hits < structure.hitsMax-200;
+        }
+    });
+
+    let towerIdx = 0;
+    logger.debug(`repairs: ${targets.length}`);
+    logger.debug(`towers: ${towers.length}`);
+    for (let idx in targets) {
+        if (towerIdx < towers.length) {
+            let tower = towers[towerIdx];
+            let target = targets[idx];
+
+            if (target === tower) continue;
+            tower.repair(target);
+            towerIdx++;
+        } else {
+            break;
+        }
+    }
+};
+
 /***
  *
  * @param room
@@ -77,6 +106,9 @@ let run = (room) => {
         logger.info(`Room Manager: planning room`);
         planSpawnner(room);
         // planMiningRig(room);
+
+        operateTowers(room);
+
     }
 };
 
