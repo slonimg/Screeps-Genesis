@@ -31,9 +31,11 @@ let logRoomTasks = (tasks) => {
  */
 let getRoutineTasks = (room) => {
     logger.debug(`get routine tasks: ${room}`);
-    let sources = room.find(FIND_SOURCES);
     let tasks = getTasks(room);
 
+    let sources = room.find(FIND_SOURCES);
+
+    // create mine source task
     for (let idx in sources) {
         let source = sources[idx];
         let taskKey = `mine_source_${source.id}`;
