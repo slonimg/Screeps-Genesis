@@ -20,17 +20,20 @@ const logger = require('logger');
 // };
 
 let visualizeSpawn = (room, pos) => {
+    logger.info(`visualizin ${room}, ${pos}`);
     room.visual.circle(pos, {fill: 'transparent', radius: 0.55, stroke: 'white'});
     room.visual.circle(pos, {fill: 'yellow', radius: 0.35, stroke: 'black'});
 };
 
 let planSpawnner = (room) => {
     let spawnFlags = room.find(FIND_FLAGS, {
-        // filter: { color: COLORS_ALL[COLOR_PURPLE]-1 }
+        filter: (flag) => {
+            return flag.color === COLORS_ALL[COLOR_PURPLE]-1
+        }
     });
     if (spawnFlags && spawnFlags.length > 0) {
         let spawn = spawnFlags[0];
-        visualizeSpawn(room, spawn);
+        visualizeSpawn(room, spawn.pos);
 
         logger.info(`flag color is ${spawn.color} and ${COLORS_ALL[COLOR_PURPLE]-1}`);
     } else {
