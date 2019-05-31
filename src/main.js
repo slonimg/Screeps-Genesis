@@ -57,11 +57,12 @@ roleRunners[roles.BUILDER] = builder;
 
 let logStatus = (counts) => {
 
-    logger.info('** Status Report **');
+    logger.info(`***** Status Report - ${Game.time} *****`);
     logger.info(`Harvesters: ${counts.harvesters}/${constants.room.harvesters}`);
     logger.info(`Upgraders: ${counts.upgraders}/${constants.room.upgraders}`);
     logger.info(`Builders:  ${counts.builders}/${constants.room.builders}`);
-    logger.info(`*******************`);
+    logger.info(`***********************************`);
+
 
 };
 
