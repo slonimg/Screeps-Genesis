@@ -27,8 +27,25 @@ let getBodyCost  = (body) => {
     return cost;
 };
 
+let getCreepLayout = (spawn, layouts) => {
+    let layout;
+    let foundLayout = false;
+    logger.debug('getting layout');
+    for (let i = layouts.length-1; !foundLayout && i >= 0; i--) {
+        layout = layouts[i];
+        let cost = getBodyCost(layout);
+        logger.debug(`checking layout: ${layout}, cost: ${cost}, availableEnergyCap: ${spawn.room.energyCapacityAvailable}`);
+
+        if (cost <= spawn.room.energyCapacityAvailable)
+            foundLayout = true;
+    }
+
+    return foundLayout ? layout : undefined;
+};
+
 module.exports = {
     getEnergy,
     getBodyCost,
     transferEnergy,
+    getCreepLayout
 };
