@@ -82,8 +82,10 @@ module.exports.loop = function () {
         Memory.roomNames = [spawn.room.name];
     }
 
-    for (let room in Memory.roomNames) {
-        roomManager.run(Memory.roomNames[room]);
+    for (let key in Memory.roomNames) {
+        let roomName = Memory.roomNames[key];
+        let room = Game.rooms[roomName];
+        roomManager.run(room);
         tasksManager.run(room);
     }
 
