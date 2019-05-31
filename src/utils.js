@@ -3,7 +3,9 @@ const logger = require('logger');
 
 let getEnergy = (creep, source) => {
     if (!source) {
-        source = creep.pos.findClosestByPath(FIND_SOURCES);
+        source = creep.pos.findClosestByPath(FIND_SOURCES, {
+            filter: (source) => { return source.energy > 0 }
+        });
         logger.debug(`${creep} - source is null`);
     }
     logger.debug(`${creep} - source: ${source}`);
