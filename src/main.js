@@ -4,6 +4,7 @@ let builder = require('role.builder');
 let constants = require('constants');
 let roles = constants.roles;
 let logger = require('logger');
+let roomManager = require('room.manager');
 
 let memoryCleanup = () => {
     for(let name in Memory.creeps) {
@@ -64,6 +65,15 @@ module.exports.loop = function () {
     logger.info(`Upgraders: ${counts.upgraders}/${constants.room.upgraders}`);
     logger.info(`Builders:  ${counts.builders}/${constants.room.builders}`);
     logger.info(`*******************`);
+
+    if (!Memory.roomNames) {
+        let spawn = Game.spawns['Spawn1'];
+        Memory.roomNames = [spawn.room.name];
+    }
+
+    for (let room in Memory.roomNames) {
+        roomManager.run(Memory.roomNames[room]);
+    }
 };
 
 
