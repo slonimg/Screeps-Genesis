@@ -9,6 +9,7 @@
 const consts = require('constants');
 let roles = consts.roles;
 const utils = require('utils');
+const logger = require('logger');
 
 const layout = [WORK, CARRY, MOVE, CARRY, MOVE];
 let run = (creep) => {
@@ -20,11 +21,18 @@ let run = (creep) => {
                 structure.energy < structure.energyCapacity;
         }
     });
-    if (targets.length === 0) {
-        targets = [Game.spawns['Spawn1']];
-    }
+
+    // Put resources in hive
     if (targets.length > 0)
         utils.transferEnergy(creep, targets[0]);
+
+    // or Clear the way (move to rally flag or Spawn and wait there)
+    else {
+        let rallyFlag = Game.flags['Rally'];
+        let target = rallyFlag ? rallyFlag : Game.spawns['Spawn1'];
+        let moveResult = creep.moveTo(target.pos);
+        logger.info(`move resulted in ${moveResult}`);
+    }
 
 };
 
