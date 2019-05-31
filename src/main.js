@@ -53,7 +53,7 @@ module.exports.loop = function () {
     memoryCleanup();
 
     for (let name in Game.creeps) {
-        // console.log('processing ', name)
+        logger.debug(`processing ${name}`);
         let creep = Game.creeps[name];
         let role = creep.memory.role;
         roleRunners[role].run(creep);
