@@ -21,7 +21,7 @@ let getTasks = (room) => {
 };
 
 let logRoomTasks = (tasks) => {
-    logger.info(`tasks ${tasks}`);
+    logger.debug(`tasks ${tasks}`);
 };
 
 /***
