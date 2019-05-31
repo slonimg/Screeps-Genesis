@@ -22,7 +22,7 @@ let transferEnergy = (creep, source) => {
 let getBodyCost  = (body) => {
     let cost = 0;
     for (let part in body) {
-        cost += BODYPART_COST[part];
+        cost += BODYPART_COST[body[part]];
     }
     return cost;
 };
