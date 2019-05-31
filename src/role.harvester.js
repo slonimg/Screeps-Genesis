@@ -13,7 +13,16 @@ const logger = require('logger');
 
 const layout = [WORK, CARRY, MOVE, CARRY, MOVE];
 let run = (creep) => {
-    if (creep.carry.energy < creep.carryCapacity) return utils.getEnergy(creep);
+    if (creep.memory.supplying === undefined) {
+        creep.memory.supplying = false;
+    }
+    if (creep.memory.supplying && creep.carry.energy === 0) {
+        creep.memory.supplying = false;
+    }
+    if (!creep.memory.supplying && creep.carry.energy === creep.carryCapacity) {
+        creep.memory.supplying = true;
+    }
+    if (!creep.memory.supplying) return utils.getEnergy(creep);
 
     let targets = creep.room.find(FIND_STRUCTURES, {
         filter: (structure) => {
