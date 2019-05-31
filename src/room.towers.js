@@ -1,12 +1,9 @@
 const logger = require('logger');
 
 let runRepairs = (room, towers, initialIndex) => {
-    let targets = room.find(FIND_STRUCTURES, {
+    let targets = room.find(FIND_MY_STRUCTURES, {
         filter: (structure) => {
-            return (structure.structureType === STRUCTURE_EXTENSION ||
-                structure.structureType === STRUCTURE_SPAWN ||
-                structure.structureType === STRUCTURE_TOWER ||
-                structure.structureType === STRUCTURE_ROAD) && structure.hits < structure.hitsMax - 200;
+            return structure.hits < structure.hitsMax - 200;
         }
     });
 
@@ -58,10 +55,10 @@ let attackCreeps = (room, towers, initialIndex) => {
     let myTargets = room.find(FIND_MY_CREEPS);
 
     let towerIdx = initialIndex;
-    logger.info(`foes: ${targets.length}`);
-    logger.info(`mine: ${myTargets.length}`);
-    logger.info(`all: ${otherTargets.length}`);
-    logger.info(`available towers: ${towers.length-initialIndex}`);
+    logger.debug(`foes: ${targets.length}`);
+    logger.debug(`mine: ${myTargets.length}`);
+    logger.debug(`all: ${otherTargets.length}`);
+    logger.debug(`available towers: ${towers.length-initialIndex}`);
 
     if (targets.length > 0) {
         for (let targetKey in targets) {
