@@ -29,29 +29,13 @@ let run = (creep) => {
     }
 };
 
-let getCreepLayout = (spawn) => {
-    let layout;
-    let foundLayout = false;
-    logger.debug('getting layout');
-    for (let i = layouts.length-1; !foundLayout && i >= 0; i--) {
-        layout = layouts[i];
-        let cost = utils.getBodyCost(layout);
-        logger.debug(`checking layout: ${layout}, cost: ${cost}, availableEnergyCap: ${spawn.room.energyCapacityAvailable}`);
-
-        if (cost <= spawn.room.energyCapacityAvailable)
-            foundLayout = true;
-    }
-
-    return foundLayout ? layout : undefined;
-};
-
 let createUpgrader = (spawn, name) => {
     if (!name) {
         name =  'Upgrader_' + spawn.name + '_' + Game.time;
     }
 
     let result = undefined;
-    let layout = getCreepLayout(spawn);
+    let layout = utils.getCreepLayout(spawn, layouts);
     if (layout) {
         result = spawn.spawnCreep(layout, name, {
             memory: { role: constants.roles.UPGRADER }
