@@ -56,14 +56,13 @@ let planSpawnner = (room) => {
 
 /***
  *
- * @param roomName
- * @type string
+ * @param room
+ * @type Room
  */
-let run = (roomName) => {
+let run = (room) => {
     // no plan in room
-    logger.info(`Room Manager: running room ${roomName}`);
+    logger.info(`Room Manager: running room ${room.name}`);
 
-    let room = Game.rooms[roomName];
     let mem = room.memory;
     if (!mem.plan) {
         mem.plan = {
