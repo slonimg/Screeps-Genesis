@@ -73,6 +73,8 @@ let logStatus = (counts) => {
 
 module.exports.loop = function () {
     memoryCleanup();
+    console.log();
+    logger.info(`********** Tick - ${Game.time} **********`);
 
     for (let name in Game.creeps) {
         logger.debug(`processing ${name}`);
