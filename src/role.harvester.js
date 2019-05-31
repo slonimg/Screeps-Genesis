@@ -20,8 +20,12 @@ let run = (creep) => {
                 structure.energy < structure.energyCapacity;
         }
     });
+    if (targets.length === 0) {
+        targets = [Game.spawns['Spawn1']];
+    }
     if (targets.length > 0)
         utils.transferEnergy(creep, targets[0]);
+
 };
 
 let createHarvester = (spawn, name) => {
