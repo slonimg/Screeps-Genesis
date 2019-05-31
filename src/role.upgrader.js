@@ -8,6 +8,7 @@
  */
 const constants = require('constants');
 const utils = require('utils');
+const logger = require('logger');
 const layouts = [
     [WORK, CARRY, MOVE, CARRY, MOVE],
     [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE]
@@ -31,9 +32,12 @@ let run = (creep) => {
 let getCreepLayout = (spawn) => {
     let layout;
     let foundLayout = false;
+    logger.debug('getting layout');
     for (let i = layouts.length-1; !foundLayout && i >= 0; i--) {
         layout = layouts[i];
         let cost = utils.getBodyCost(layout);
+        logger.debug(`checking layout: ${layout}, cost: ${cost}, availableEnergyCap: ${spawn.room.energyCapacityAvailable}`);
+
         if (cost <= spawn.room.energyCapacityAvailable)
             foundLayout = true;
     }
@@ -53,6 +57,7 @@ let createUpgrader = (spawn, name) => {
             memory: { role: constants.roles.UPGRADER }
         });
     }
+    logger.debug(`layout: ${layout}`);
     return result;
 };
 
