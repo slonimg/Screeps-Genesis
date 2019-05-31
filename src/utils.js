@@ -17,7 +17,7 @@ let getEnergy = (creep, source) => {
 
 let transferEnergy = (creep, source) => {
     if (creep.transfer(source, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(source)
+        creep.moveTo(source, {visualizePathStyle: {stroke: '#ffffff'}});
     }
 };
 
