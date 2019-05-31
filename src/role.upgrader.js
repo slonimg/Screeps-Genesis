@@ -8,7 +8,6 @@
  */
 const constants = require('constants');
 const utils = require('utils');
-// const layout = [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
 const layouts = [
     [WORK, CARRY, MOVE, CARRY, MOVE],
     [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE]
@@ -29,22 +28,30 @@ let run = (creep) => {
     }
 };
 
-let createUpgrader = (spawn: StructureSpawn, name: string) => {
+let getCreepLayout = (spawn) => {
+    let layout;
+    let foundLayout = false;
+    for (let i = layouts.length-1; !foundLayout && i >= 0; i--) {
+        layout = layouts[i];
+        let cost = utils.getBodyCost(layout);
+        if (cost <= spawn.room.energyCapacityAvailable)
+            foundLayout = true;
+    }
+
+    return foundLayout ? layout : undefined;
+};
+
+let createUpgrader = (spawn, name) => {
     if (!name) {
         name =  'Upgrader_' + spawn.name + '_' + Game.time;
     }
 
-    let result;
-    for (let i = layouts.length-1; i >= 0; i--) {
-
-        let layout = layouts[i];
+    let result = undefined;
+    let layout = getCreepLayout(spawn);
+    if (layout) {
         result = spawn.spawnCreep(layout, name, {
             memory: { role: constants.roles.UPGRADER }
         });
-
-        if (result !== ERR_NOT_ENOUGH_ENERGY) {
-            break;
-        }
     }
     return result;
 };
