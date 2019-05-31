@@ -17,8 +17,8 @@ module.exports = {
 
     // room bot configuration
     room: {
-        harvesters: 10,
+        harvesters: 6,
         upgraders: 8,
-        builders: 3
+        builders: 4
     }
 };
