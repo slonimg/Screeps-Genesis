@@ -13,6 +13,7 @@ module.exports = {
         HARVESTER: 1,
         UPGRADER: 2,
         BUILDER: 3,
+        MINER: 4
     },
 
     // room bot configuration
