@@ -11,6 +11,7 @@ const builder = require('role.builder');
 // room functions
 const roomManager = require('room.manager');
 const tasksManager = require('room.tasks');
+const towersManager = require('room.towers');
 
 const memoryCleanup = () => {
     for(let name in Memory.creeps) {
@@ -92,6 +93,7 @@ module.exports.loop = function () {
         let room = Game.rooms[roomName];
         roomManager.run(room);
         tasksManager.run(room);
+        towersManager.run(room);
     }
 
     logStatus(counts);
