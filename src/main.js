@@ -1,12 +1,18 @@
-let harvester = require('role.harvester');
-let upgrader = require('role.upgrader');
-let builder = require('role.builder');
-let constants = require('constants');
-let roles = constants.roles;
-let logger = require('logger');
-let roomManager = require('room.manager');
+// constants
+const constants = require('constants');
+const roles = constants.roles;
+const logger = require('logger');
 
-let memoryCleanup = () => {
+// roles
+const harvester = require('role.harvester');
+const upgrader = require('role.upgrader');
+const builder = require('role.builder');
+
+// room functions
+const roomManager = require('room.manager');
+const tasksManager = require('room.tasks');
+
+const memoryCleanup = () => {
     for(let name in Memory.creeps) {
         if(!Game.creeps[name]) {
             delete Memory.creeps[name];
@@ -15,7 +21,7 @@ let memoryCleanup = () => {
     }
 };
 
-let spawnCreeps = () => {
+const spawnCreeps = () => {
     logger.info('spawning creeps');
     let harvesters = _.filter(Game.creeps, (creep) => creep.memory.role === roles.HARVESTER);
     let upgraders = _.filter(Game.creeps, (creep) => creep.memory.role === roles.UPGRADER);
@@ -49,6 +55,16 @@ roleRunners[roles.HARVESTER] = harvester;
 roleRunners[roles.UPGRADER] = upgrader;
 roleRunners[roles.BUILDER] = builder;
 
+let logStatus = (counts) => {
+
+    logger.info('** Status Report **');
+    logger.info(`Harvesters: ${counts.harvesters}/${constants.room.harvesters}`);
+    logger.info(`Upgraders: ${counts.upgraders}/${constants.room.upgraders}`);
+    logger.info(`Builders:  ${counts.builders}/${constants.room.builders}`);
+    logger.info(`*******************`);
+
+};
+
 module.exports.loop = function () {
     memoryCleanup();
 
@@ -60,11 +76,6 @@ module.exports.loop = function () {
     }
 
     let counts = spawnCreeps();
-    logger.info('** Status Report **');
-    logger.info(`Harvesters: ${counts.harvesters}/${constants.room.harvesters}`);
-    logger.info(`Upgraders: ${counts.upgraders}/${constants.room.upgraders}`);
-    logger.info(`Builders:  ${counts.builders}/${constants.room.builders}`);
-    logger.info(`*******************`);
 
     if (!Memory.roomNames) {
         let spawn = Game.spawns['Spawn1'];
@@ -73,7 +84,10 @@ module.exports.loop = function () {
 
     for (let room in Memory.roomNames) {
         roomManager.run(Memory.roomNames[room]);
+        tasksManager.run(room);
     }
+
+    logStatus(counts);
 };
 
 
