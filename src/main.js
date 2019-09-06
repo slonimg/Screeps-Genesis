@@ -71,25 +71,27 @@ let logStatus = (counts) => {
 
 };
 
-module.exports.loop = function () {
-    memoryCleanup();
-    console.log();
-    logger.info(`********** Tick - ${Game.time} **********`);
-
+function runCreeps() {
     for (let name in Game.creeps) {
         logger.debug(`processing ${name}`);
         let creep = Game.creeps[name];
         let role = creep.memory.role;
         roleRunners[role].run(creep);
     }
+}
 
-    let counts = spawnCreeps();
-
-    if (!Memory.roomNames) {
-        let spawn = Game.spawns['Spawn1'];
-        Memory.roomNames = [spawn.room.name];
+function populateRoomNames() {
+    try {
+        if (!Memory.roomNames) {
+            let spawn = Game.spawns['Spawn1'];
+            Memory.roomNames = [spawn.room.name];
+        }
+    } catch (e) {
+        logger.warning('error in populating room names', e)
     }
+}
 
+function runRooms() {
     for (let key in Memory.roomNames) {
         let roomName = Memory.roomNames[key];
         let room = Game.rooms[roomName];
@@ -97,7 +99,18 @@ module.exports.loop = function () {
         tasksManager.run(room);
         towersManager.run(room);
     }
+}
 
+module.exports.loop = function () {
+    memoryCleanup();
+    console.log();
+    logger.info(`********** Tick - ${Game.time} **********`);
+
+    runCreeps();
+    let counts = spawnCreeps();
+
+    populateRoomNames();
+    runRooms();
     logStatus(counts);
 };
 
