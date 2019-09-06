@@ -94,7 +94,7 @@ let needsNewConstructionSite = (room) => {
  */
 let run = (room) => {
     // no plan in room
-    logger.info(`Room Manager: running room ${room.name}`);
+    logger.info(`Room Manager: running room ${room}`);
 
     let mem = room.memory;
     if (!mem.plan) {
