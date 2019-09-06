@@ -95,6 +95,11 @@ function runRooms() {
     for (let key in Memory.roomNames) {
         let roomName = Memory.roomNames[key];
         let room = Game.rooms[roomName];
+
+        if (!room) {
+            logger.warning(`No room to run`)
+        }
+
         roomManager.run(room);
         tasksManager.run(room);
         towersManager.run(room);
