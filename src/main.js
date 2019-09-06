@@ -93,6 +93,7 @@ function populateRoomNames() {
 
 function runRooms() {
     for (let key in Memory.roomNames) {
+        logger.info(`processing room ${key}`)
         let roomName = Memory.roomNames[key];
         let room = Game.rooms[roomName];
 
