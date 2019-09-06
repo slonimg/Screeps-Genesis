@@ -98,6 +98,7 @@ function runRooms() {
 
         if (!room) {
             logger.warning(`No room to run`)
+            continue
         }
 
         roomManager.run(room);
