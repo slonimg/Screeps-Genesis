@@ -96,10 +96,10 @@ function runRooms() {
         let room = Game.spawns['Spawn1'].room;
         logger.info(`processing room ${room.name}`);
 
-        if (!room) {
-            logger.warning(`No room to run`);
-            continue
-        }
+        // if (!room) {
+        //     logger.warning(`No room to run`);
+        //     continue
+        // }
 
         roomManager.run(room);
         tasksManager.run(room);
