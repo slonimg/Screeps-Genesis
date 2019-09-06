@@ -97,7 +97,7 @@ function runRooms() {
         let room = Game.rooms[roomName];
 
         if (!room) {
-            logger.warning(`No room to run`)
+            logger.warning(`No room to run`);
             continue
         }
 
