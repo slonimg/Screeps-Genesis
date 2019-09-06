@@ -95,6 +95,7 @@ function runRooms() {
     for (let key in Memory.roomNames) {
         logger.info(`processing room ${key}`)
         let roomName = Memory.roomNames[key];
+        logger.info(`Game rooms: ${Game.rooms}`)
         let room = Game.rooms[roomName];
 
         if (!room) {
