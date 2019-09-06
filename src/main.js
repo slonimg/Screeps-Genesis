@@ -93,11 +93,8 @@ function populateRoomNames() {
 
 function runRooms() {
     for (let key in Memory.roomNames) {
-        logger.info(`processing room ${key}`)
-        let roomName = Memory.roomNames[key];
-        logger.info(`Game rooms: ${Game.rooms}`)
-        Memory.gamerooms = Game.rooms;
-        let room = Game.rooms[roomName];
+        let room = Game.spawns['Spawn1'].room;
+        logger.info(`processing room ${room.name}`);
 
         if (!room) {
             logger.warning(`No room to run`);
